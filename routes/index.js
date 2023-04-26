@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  console.log(req);
   try {
     if (!req.app.locals.authed) {
       const url = req.app.locals.oAuth2Client.generateAuthUrl({
@@ -34,6 +35,7 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/auth/google/callback", function (req, res) {
+  console.log(req);
   try {
     const code = req.query.code;
     if (code) {
