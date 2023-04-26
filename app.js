@@ -2,11 +2,23 @@ var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
+const { google } = require("googleapis");
+const OAuth2Data = require("./google_key.json");
 var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
+var CLIENT_ID = OAuth2Data.web.client_id;
+var CLIENT_SECRET = OAuth2Data.web.client_secret;
+var REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 
 var app = express();
+app.locals.google = google;
+app.locals.oAuth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URL
+);
+app.locals.authed - false;
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
