@@ -12,13 +12,14 @@ var CLIENT_SECRET = OAuth2Data.web.client_secret;
 var REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 
 var app = express();
+
 app.locals.google = google;
 app.locals.oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
   REDIRECT_URL
 );
-app.locals.authed - false;
+app.locals.authed = false;
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
