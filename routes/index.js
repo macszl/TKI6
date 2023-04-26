@@ -8,6 +8,7 @@ router.get("/", function (req, res, next) {
       access_type: "offline",
       scope: "https://www.googleapis.com/auth/userinfo.profile",
     });
+    console.log("Url problems.");
     console.log(url);
     res.redirect(url);
   } else {
@@ -17,8 +18,10 @@ router.get("/", function (req, res, next) {
     });
     oauth2.userinfo.get(function (err, response) {
       if (err) {
+        console.log("Error.");
         console.log(err);
       } else {
+        console.log("Response data.");
         console.log(response.data);
         res.render("index", { title: "Express", user: response.data });
       }
