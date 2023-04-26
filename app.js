@@ -1,3 +1,4 @@
+require("dotenv").config();
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
@@ -7,8 +8,8 @@ var OAuth2Data = require("./google_key.json");
 var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
-var CLIENT_ID = OAuth2Data.web.client_id;
-var CLIENT_SECRET = OAuth2Data.web.client_secret;
+var CLIENT_ID = process.env.client_id;
+var CLIENT_SECRET = process.env.client_secret;
 var REDIRECT_URL = OAuth2Data.web.redirect_uris[0];
 
 var app = express();
