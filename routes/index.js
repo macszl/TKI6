@@ -3,10 +3,9 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  console.log(req);
   try {
-    if (!req.app.locals.authed) {
-      const url = req.app.locals.oAuth2Client.generateAuthUrl({
+    if (!authed) {
+      const url = oAuth2Client.generateAuthUrl({
         access_type: "offline",
         scope: "https://www.googleapis.com/auth/userinfo.profile",
       });
@@ -14,7 +13,7 @@ router.get("/", function (req, res, next) {
       console.log(url);
       res.redirect(url);
     } else {
-      var oauth2 = app.locals.google.oauth2({
+      var oauth2 = google.oauth2({
         auth: oAuth2Client,
         version: "v2",
       });
@@ -35,19 +34,18 @@ router.get("/", function (req, res, next) {
 });
 
 router.get("/auth/google/callback", function (req, res) {
-  console.log(req);
   try {
     const code = req.query.code;
     if (code) {
-      req.app.locals.oAuth2Client.getToken(code, function (err, tokens) {
+      oAuth2Client.getToken(code, function (err, tokens) {
         if (err) {
           console.log("Error authenticating");
           console.log(err);
         } else {
           console.log("Successfully authenticated");
           console.log(tokens);
-          req.app.locals.oAuth2Client.setCredentials(tokens);
-          req.app.locals.authed = true;
+          oAuth2Client.setCredentials(tokens);
+          authed = true;
           res.redirect("/");
         }
       });
